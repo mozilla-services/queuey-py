@@ -4,5 +4,6 @@
 # You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from queuey_py.client import Client
+from queuey_py.client import HTTPError
 
-__all__ = (Client, )
+__all__ = (Client, HTTPError)
