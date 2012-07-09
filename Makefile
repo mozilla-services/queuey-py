@@ -73,6 +73,6 @@ html:
 
 test:
 	@echo "Running tests..."
-	$(NOSE) --with-coverage --cover-package=$(APPNAME) \
-	--cover-inclusive $(APPNAME) $(ARG)
+	$(NOSE) --with-coverage --cover-package=queuey_py \
+	--cover-inclusive queuey_py $(ARG)
 	@echo "Finished running tests"
