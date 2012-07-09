@@ -11,13 +11,16 @@ wiki or look at the message queue implementation called
 Quick intro
 ===========
 
-TODO Use this::
+Connect to Queuey, create a queue and post a message::
 
-    from queuey_py import client
+    from queuey_py import Client
 
-    client = client.Client()
-    client.do_stuff()
-
+    # Specify application key and URL
+    client = Client('67e8107559e34fa48f91a746e775a751',
+                    'http://127.0.0.1:5001/v1/queuey/)
+    client.connect()
+    name = client.create_queue()
+    client.post(name, data='Hello world')
 
 Contents
 ========
