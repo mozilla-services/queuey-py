@@ -14,6 +14,7 @@ from requests.exceptions import Timeout
 import ujson
 
 from queuey_py import Client
+from queuey_py import HTTPError
 
 
 class TestQueueyConnection(unittest.TestCase):
@@ -198,7 +199,6 @@ class TestQueueyConnection(unittest.TestCase):
         self.assertEqual(info[u'partitions'], 1)
 
     def test_create_queue_error(self):
-        from qdo.exceptions import HTTPError
         conn = self._make_one()
         self.assertRaises(HTTPError, conn.create_queue, **dict(partitions=-1))
 
@@ -222,7 +222,6 @@ class TestQueueyConnection(unittest.TestCase):
         self.assertEqual(len(messages), 0)
 
     def test_messages_error(self):
-        from qdo.exceptions import HTTPError
         conn = self._make_one()
         name = conn.create_queue()
         try:
