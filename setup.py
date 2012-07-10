@@ -13,8 +13,6 @@ here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.rst')).read()
 CHANGES = open(os.path.join(here, 'CHANGES.rst')).read()
 
-install_requires = []
-
 
 setup(
     name='queuey-py',
@@ -43,5 +41,5 @@ setup(
     install_requires=[
         'requests',
         'ujson',
-    ] + install_requires,
+    ],
     )
