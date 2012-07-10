@@ -6,7 +6,7 @@ This is a Python client library used for interacting with messages from a
 Mozilla Services message queue. More soon, in the meantime, you can read the
 `spec <https://wiki.mozilla.org/Services/Sagrada/Queuey>`_ on the Mozilla
 wiki or look at the message queue implementation called
-`Queuey <https://github.com/mozilla-services/queuey>`_ itself.
+`Queuey <http://queuey.readthedocs.org>`_ itself.
 
 Quick intro
 ===========
