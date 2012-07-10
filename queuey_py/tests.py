@@ -18,7 +18,7 @@ from queuey_py import Client
 
 class TestQueueyConnection(unittest.TestCase):
 
-    queuey_app_key = u'f25bfb8fe200475c8a0532a9cbe7651e'
+    queuey_app_key = u'67e8107559e34fa48f91a746e775a751'
 
     def _make_one(self, connection=u'http://127.0.0.1:5001/v1/queuey/'):
         return Client(self.queuey_app_key, connection=connection)
