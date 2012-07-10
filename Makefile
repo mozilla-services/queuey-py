@@ -22,6 +22,7 @@ INSTALL = $(HERE)/bin/pip install
 PIP_DOWNLOAD_CACHE ?= /tmp/pip_cache
 INSTALLOPTIONS = --download-cache $(PIP_DOWNLOAD_CACHE) -U -i $(PYPI) \
 	--use-mirrors
+NGINX_VERSION = 1.2.1
 
 ifdef PYPIEXTRAS
 	PYPIOPTIONS += -e $(PYPIEXTRAS)
@@ -42,11 +43,12 @@ endif
 INSTALL += $(INSTALLOPTIONS)
 
 SW = sw
+NGINX = $(BIN)/nginx
 BUILD_DIRS = bin build deps include lib lib64 man
 
 
 .PHONY: all build test build_rpms mach
-.SILENT: lib python pip
+.SILENT: lib python pip $(NGINX) nginx
 
 all: build
 
@@ -60,12 +62,31 @@ lib: $(BIN)/pip
 	@echo "Installing package pre-requisites..."
 	$(INSTALL) -r dev-reqs.txt
 
+$(NGINX):
+	@echo "Installing Nginx"
+	mkdir -p bin
+	cd bin && \
+	curl --silent http://nginx.org/download/nginx-$(NGINX_VERSION).tar.gz | tar -zx
+	mv bin/nginx-$(NGINX_VERSION) bin/nginx
+	cd bin/nginx && \
+	./configure --prefix=$(HERE)/bin/nginx --with-http_ssl_module \
+	--conf-path=../../etc/nginx/nginx.conf --pid-path=../../var/nginx.pid \
+	--lock-path=../../var/nginx.lock --error-log-path=../../var/log/nginx-error.log \
+	--http-log-path=../../var/log/nginx-access.log >/dev/null 2>&1 && \
+	make >/dev/null 2>&1 && make install >/dev/null 2>&1
+	@echo "Finished installing Nginx"
+
+nginx: $(NGINX)
+
+clean-nginx:
+	rm -rf bin/nginx
+
 clean-env:
 	rm -rf $(BUILD_DIRS)
 
 clean: clean-env
 
-build: lib
+build: lib nginx
 	$(BUILDAPP) -c $(CHANNEL) $(PYPIOPTIONS) $(DEPS)
 
 html:
