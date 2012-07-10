@@ -10,10 +10,6 @@ notifications:
   email:
     - hschlichting@mozilla.com
 
-before_install:
-    - sudo apt-get -q update >/dev/null 2>&1
-    - sudo aptitude -y remove dsc cassandra
-
 install:
     - make build
 
