@@ -219,8 +219,7 @@ class Client(object):
 
     def messages(self, queue_name, partition=1, since=None, limit=100,
                   order='ascending'):
-        """Returns messages for a queue, by default from oldest to
-           newest.
+        """Returns messages for a queue, by default from oldest to newest.
 
         :param queue_name: Queue name
         :type queue_name: unicode
