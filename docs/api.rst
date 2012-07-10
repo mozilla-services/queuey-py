@@ -34,7 +34,7 @@ Classes
     .. automethod:: post(url='', params=None, data='')
     .. automethod:: delete(url='', params=None)
     .. automethod:: create_queue(partitions=1, queue_name=None)
-    .. automethod:: messages(queue_name, partition=1, since=0.0, limit=100, order='ascending')
+    .. automethod:: messages(queue_name, partition=1, since=None, limit=100, order='ascending')
 
 Functions
 ~~~~~~~~~

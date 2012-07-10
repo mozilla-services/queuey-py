@@ -249,10 +249,15 @@ class TestQueueyConnection(unittest.TestCase):
         conn = self._make_one()
         name = conn.create_queue()
         # add test message
-        conn.post(url=name, data=u'Hello')
-        # query messages in the future
-        messages = conn.messages(name, since=time.time() + 1000)
+        r1 = conn.post(url=name, data=u'Hello 1')
+        key1 = ujson.decode(r1.text)[u'messages'][0][u'key']
+        r2 = conn.post(url=name, data=u'Hello 2')
+        key2 = ujson.decode(r2.text)[u'messages'][0][u'key']
+        messages = conn.messages(name, since=key2)
         self.assertEqual(len(messages), 0)
+        messages = conn.messages(name, since=key1)
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(messages[0][u'body'], u'Hello 2')
 
     def test_messages_error(self):
         conn = self._make_one()
