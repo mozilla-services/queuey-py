@@ -3,6 +3,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this file,
 # You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import xmlrpclib
 import time
 import urllib
 import unittest
@@ -16,10 +17,42 @@ import ujson
 from queuey_py import Client
 from queuey_py import HTTPError
 
+processes = {}
+
+
+def setup_supervisor():
+    processes[u'supervisor'] = xmlrpclib.ServerProxy(
+        u'http://127.0.0.1:4999').supervisor
+
+
+def ensure_process(name, timeout=30, noisy=True):
+    srpc = processes[u'supervisor']
+    if srpc.getProcessInfo(name)[u'statename'] in (u'STOPPED', u'EXITED'):
+        if noisy:
+            print(u'Starting %s!\n' % name)
+        srpc.startProcess(name)
+    # wait for startup to succeed
+    for i in xrange(1, timeout):
+        state = srpc.getProcessInfo(name)[u'statename']
+        if state == u'RUNNING':
+            break
+        elif state != u'RUNNING':
+            if noisy:
+                print(u'Waiting on %s for %s seconds.' % (name, i * 0.1))
+            time.sleep(i * 0.1)
+    if srpc.getProcessInfo(name)[u'statename'] != u'RUNNING':
+        raise RuntimeError(u'%s not running' % name)
+
 
 class TestQueueyConnection(unittest.TestCase):
 
     queuey_app_key = u'67e8107559e34fa48f91a746e775a751'
+
+    @classmethod
+    def setUpClass(cls):
+        setup_supervisor()
+        ensure_process(u'queuey')
+        ensure_process(u'nginx')
 
     def _make_one(self, connection=u'https://127.0.0.1:5001/v1/queuey/'):
         return Client(self.queuey_app_key, connection=connection)
