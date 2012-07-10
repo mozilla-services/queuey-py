@@ -41,7 +41,6 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'metlog-py',
         'requests',
         'ujson',
     ] + install_requires,

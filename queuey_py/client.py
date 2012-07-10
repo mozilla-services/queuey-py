@@ -15,8 +15,6 @@ from requests.exceptions import Timeout
 import ujson
 from ujson import decode as ujson_decode
 
-# from qdo.log import get_logger
-
 
 def retry(func):
     @wraps(func)
@@ -26,7 +24,6 @@ def retry(func):
                 return func(self, *args, **kwargs)
             except Timeout:
                 pass
-                # get_logger().incr(u'queuey.conn_timeout')
         # raise timeout after all
         raise
     return wrapped
@@ -37,13 +34,7 @@ def fallback(func):
     def wrapped(self, *args, **kwargs):
         try:
             return func(self, *args, **kwargs)
-        except (SSLError, ConnectionError) as e:
-            if isinstance(e, SSLError):
-                pass
-                # get_logger().incr(u'queuey.conn_ssl_error')
-            else:
-                pass
-                # get_logger().incr(u'queuey.conn_error')
+        except (SSLError, ConnectionError):
             if self.fallback_urls:
                 self.failed_urls.append(self.app_url)
                 self.app_url = self.fallback_urls.pop()
@@ -89,7 +80,6 @@ class Client(object):
         # cycle through them one after the other
         self.session = session(headers=headers, timeout=self.timeout,
             config={u'pool_maxsize': 1, u'keep_alive': True}, prefetch=True)
-        # self.timer = get_logger().timer
         self._configure_connection(connection)
 
     def _configure_connection(self, connection):
@@ -253,7 +243,6 @@ class Client(object):
             # use the repr, to avoid a float getting clobbered by implicit
             # str() calls in the URL generation
             params[u'since'] = repr(since)
-        # with self.timer(u'queuey.get_messages'):
         response = self.get(queue_name, params=params)
         if response.ok:
             messages = ujson_decode(response.text)[u'messages']
