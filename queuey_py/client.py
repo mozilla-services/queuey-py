@@ -53,7 +53,7 @@ class HTTPError(exceptions.HTTPError):
 
 
 class Client(object):
-    """Represents a connection to one :term:`Queuey` server.
+    """Represents a connection to a :term:`Queuey` server or cluster.
 
     :param app_key: The applications key used for authorization
     :type app_key: str
