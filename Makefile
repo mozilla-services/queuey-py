@@ -95,5 +95,7 @@ html:
 test:
 	@echo "Running tests..."
 	$(NOSE) --with-coverage --cover-package=queuey_py \
-	--cover-inclusive queuey_py $(ARG)
+	--cover-inclusive queuey_py \
+	--set-env-variables="{'REQUESTS_CA_BUNDLE': '$(HERE)/etc/ssl/localhost.crt'}" \
+	$(ARG)
 	@echo "Finished running tests"

@@ -20,7 +20,7 @@ class TestQueueyConnection(unittest.TestCase):
 
     queuey_app_key = u'67e8107559e34fa48f91a746e775a751'
 
-    def _make_one(self, connection=u'http://127.0.0.1:5001/v1/queuey/'):
+    def _make_one(self, connection=u'https://127.0.0.1:5001/v1/queuey/'):
         return Client(self.queuey_app_key, connection=connection)
 
     def test_configure_connection(self):
