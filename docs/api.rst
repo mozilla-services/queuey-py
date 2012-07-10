@@ -12,7 +12,7 @@ back to alternate :term:`Queuey` servers on SSL or connection errors. If
 multiple servers are provided, one will be selected at random, though
 `localhost` or a `127.0.0.1` / `::1` server will be preferred. Currently fall
 back to secondary servers happens exactly once per server, after which it is
-considered inactive. You have to restart the process to reset the inactive
+considered inactive. You have to make a new connection to reset the inactive
 status.
 
 The connection uses a connection pool as provided by the
