@@ -24,6 +24,11 @@ variable.
 
 .. automodule:: queuey_py.client
 
+Exceptions
+~~~~~~~~~~
+
+.. autoexception:: HTTPError
+
 Classes
 ~~~~~~~
 
