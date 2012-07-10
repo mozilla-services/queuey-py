@@ -9,15 +9,7 @@ queuey-py: Python client library for Queuey
    :target: https://secure.travis-ci.org/#!/mozilla-services/queuey-py
 
 This is a Python client library used for interacting with messages from a
-Mozilla Services message queue. More soon, in the meantime, you can read the
-`spec <https://wiki.mozilla.org/Services/Sagrada/Queuey>`_ on the Mozilla
-wiki or look at the message queue implementation called
-`Queuey <https://github.com/mozilla-services/queuey>`_ itself.
-
-
-.. note:: This code is not yet stable. Please contact
-          `Hanno Schlichting <hschlichting@mozilla.com>`_ if you are
-          interested.
+`Mozilla Services message queue <http://queuey.readthedocs.org/>`.
 
 Documentation
 =============
