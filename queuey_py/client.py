@@ -109,6 +109,8 @@ class Client(object):
     def connect(self):
         """Establish a connection to the :term:`Queuey` heartbeat url, retry
         up to :py:attr:`retries` times on connection timeout.
+
+        :raises: :py:exc:`requests.exceptions.ConnectionError`
         """
         parts = urlsplit(self.app_url)
         url = parts.scheme + u'://' + parts.netloc + u'/__heartbeat__'
