@@ -11,7 +11,9 @@ wiki or look at the message queue implementation called
 Quick intro
 ===========
 
-Connect to Queuey, create a queue and post a message::
+Connect to Queuey, create a queue and post a message:
+
+.. code-block:: python
 
     from queuey_py import Client
 
