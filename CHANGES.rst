@@ -3,7 +3,7 @@ Changelog
 =========
 
 
-0.1 (unreleased)
+0.1 (2012-07-10)
 ================
 
 - Change `since` argument of the `messages` method to deal with message ids
