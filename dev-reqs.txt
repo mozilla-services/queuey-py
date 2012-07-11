@@ -39,10 +39,10 @@ requests==0.13.2
 rsa==3.1.1
 simplejson==2.6.0
 supervisor==3.0a12
-ujson==1.19
-unittest2==0.5.1
 thrift==0.8.0
 translationstring==1.1
+ujson==1.19
+unittest2==0.5.1
 venusian==1.0a6
 virtualenv==1.7.2
 wsgiref==0.1.2
