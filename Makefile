@@ -2,7 +2,7 @@ APPNAME = queuey-py
 DEPS =
 HERE = $(shell pwd)
 BIN = $(HERE)/bin
-VIRTUALENV = virtualenv-2.6
+VIRTUALENV = virtualenv
 NOSE = bin/nosetests -s --with-xunit
 TESTS = $(APPNAME)/tests
 PYTHON = $(HERE)/bin/python
@@ -32,10 +32,10 @@ endif
 ifdef PYPISTRICT
 	PYPIOPTIONS += -s
 	ifdef PYPIEXTRAS
-		HOST = `python2.6 -c "import urlparse; print urlparse.urlparse('$(PYPI)')[1] + ',' + urlparse.urlparse('$(PYPIEXTRAS)')[1]"`
+		HOST = `python -c "import urlparse; print urlparse.urlparse('$(PYPI)')[1] + ',' + urlparse.urlparse('$(PYPIEXTRAS)')[1]"`
 
 	else
-		HOST = `python2.6 -c "import urlparse; print urlparse.urlparse('$(PYPI)')[1]"`
+		HOST = `python -c "import urlparse; print urlparse.urlparse('$(PYPI)')[1]"`
 	endif
 
 endif
@@ -53,7 +53,7 @@ BUILD_DIRS = bin build deps include lib lib64 man
 all: build
 
 $(BIN)/python:
-	python2.6 $(SW)/virtualenv.py --distribute . >/dev/null 2>&1
+	python $(SW)/virtualenv.py --distribute . >/dev/null 2>&1
 	rm distribute-0.6.*.tar.gz
 
 $(BIN)/pip: $(BIN)/python
@@ -61,6 +61,8 @@ $(BIN)/pip: $(BIN)/python
 lib: $(BIN)/pip
 	@echo "Installing package pre-requisites..."
 	$(INSTALL) -r dev-reqs.txt
+	echo "Running setup.py develop"
+	$(PYTHON) setup.py develop
 
 $(NGINX):
 	@echo "Installing Nginx"
@@ -99,6 +101,6 @@ test:
 
 test-python:
 	$(NOSE) --with-coverage --cover-package=queuey_py \
-	--cover-inclusive queuey_py \
+	--cover-inclusive queuey_py --cover-erase \
 	--set-env-variables="{'REQUESTS_CA_BUNDLE': '$(HERE)/etc/ssl/localhost.crt'}" \
 	$(ARG)
