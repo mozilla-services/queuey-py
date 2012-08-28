@@ -2,11 +2,10 @@
 Changelog
 =========
 
-
-0.2 (unreleased)
+0.2 (2012-08-28)
 ================
 
-- Test against a Queuey release.
+- Test against a Queuey 0.8 release.
 
 - Documentation tweaks and updates.
 
